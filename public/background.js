@@ -13,10 +13,10 @@ chrome.runtime.onConnect.addListener(function (port) {
     }
 
     // Inject a content script into the identified tab
-    // if (message.name == 'inject') {
-    //   chrome.tabs.executeScript(message.tabId,
-    //     { file: message.contentScript });
-    // }
+    if (message.name == 'inject') {
+      chrome.tabs.executeScript(message.tabId,
+        { file: message.contentScript });
+    }
 
     // other message handling
   }

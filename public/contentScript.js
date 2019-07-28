@@ -5,8 +5,7 @@
   var sourceKey = 'console2'
   var scriptId = '__DEV_CONSOLE2__'
 
-  // sendMessage
-  window.addEventListener('message', function(event) {
+  function sendMessage (event) {
     // Only accept messages from the same frame
     if (event.source !== window) {
       return;
@@ -25,7 +24,11 @@
     }
   
     chrome.runtime.sendMessage(message.data);
-  });
+  }
+
+  // sendMessage
+  window.removeEventListener('message', sendMessage);
+  window.addEventListener('message', sendMessage);
 
   // inject js
   const script = document.createElement('script')

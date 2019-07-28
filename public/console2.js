@@ -1,5 +1,5 @@
 
-chrome.devtools.panels.create("console2",
+chrome.devtools.panels.create("Console2",
   "",
   "index.html",
   function (panel) {
@@ -12,12 +12,6 @@ chrome.devtools.panels.create("console2",
 
 let extPanelWindow = {};
 
-// 刷新
-chrome.devtools.network.onNavigated.addListener(function () {
-
-});
-
-
 // Create a connection to the background page
 var backgroundPageConnection = chrome.runtime.connect({
   name: "console2"
@@ -28,8 +22,32 @@ backgroundPageConnection.postMessage({
   tabId: chrome.devtools.inspectedWindow.tabId
 });
 
+// Relay the tab ID to the background page
+function inject () {
+  backgroundPageConnection.postMessage({
+    name: 'inject',
+    tabId: chrome.devtools.inspectedWindow.tabId,
+    contentScript: "contentScript.js"
+  });
+}
+
+inject();
+
+// 刷新
+chrome.devtools.network.onNavigated.addListener(function () {
+  inject();
+});
+
+// 未能发送的数据
+var notSends = [];
+// 发送数据到react
 backgroundPageConnection.onMessage.addListener(function (message) {
-  console.log('收到了！')
-  console.log(message)
-  extPanelWindow.document.write(JSON.stringify(message))
+  // 缓存未发送数据
+  if (!extPanelWindow.sendConsole2) {
+    notSends.push(message);
+    return;
+  }
+  const list = notSends.concat(message);
+  extPanelWindow.sendConsole2(list);
+  notSends = [];
 });
