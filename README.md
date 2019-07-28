@@ -3,6 +3,8 @@ chrome devtools extensions, console2, you can console some thing to a separate s
 
 ### Example
 ``` javascript
+// use function 'console2' in your code
+
 // simple
 console2('hah');
 
