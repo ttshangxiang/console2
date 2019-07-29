@@ -51,3 +51,11 @@ backgroundPageConnection.onMessage.addListener(function (message) {
   extPanelWindow.sendConsole2(list);
   notSends = [];
 });
+
+// 循环判断，发送缓存数据
+setInterval(() => {
+  if (notSends.length > 0 && extPanelWindow.sendConsole2) {
+    extPanelWindow.sendConsole2(notSends);
+    notSends = [];
+  }
+}, 1000);

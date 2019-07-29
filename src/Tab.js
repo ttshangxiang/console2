@@ -25,7 +25,6 @@ class Tab extends React.Component {
   }
 
   render () {
-    console.log(this.props.list)
     return (
       <div className="Tab" style={{display: this.props.show ? 'block' : 'none'}}>
         {this.props.list.map((item, index) => (

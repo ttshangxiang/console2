@@ -37,6 +37,7 @@ class Store extends EventEmitter {
       o.tab = o.tab || 'main'
       return o.tab !== tab
     })
+    this.current = null
     this.emit('update', this)
   }
 

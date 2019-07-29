@@ -90,6 +90,7 @@ code {
   flex: 1;
   width: auto;
   display: none;
+  overflow: auto;
 }
 
 .Console2.showDetail .Detail {

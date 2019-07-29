@@ -27,8 +27,7 @@
   }
 
   // sendMessage
-  window.removeEventListener('message', sendMessage);
-  window.addEventListener('message', sendMessage);
+  window.onmessage = sendMessage
 
   // inject js
   const script = document.createElement('script')
